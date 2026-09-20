@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { cpSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -11,6 +11,7 @@ const root = dirname(fileURLToPath(import.meta.url))
 const WAVEKIT_REPO = 'cxzzzz/wavekit'
 const SURFER_TAG = 'v0.7.0'
 const TRUNK_VERSION = 'v0.21.14'
+const FORCE_VENDOR = process.env.FORCE_VENDOR === '1'
 
 function toTitleCase(id: string): string {
   return id.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
@@ -110,8 +111,16 @@ function vendorAssets(): Plugin {
   return {
     name: 'vendor-assets',
     async buildStart() {
-      await vendorWavekitExamples()
-      buildSurfer()
+      if (!FORCE_VENDOR && existsSync(join(root, 'public/examples/index.json'))) {
+        this.warn('public/examples already exists, skipping wavekit examples fetch (set FORCE_VENDOR=1 to refresh)')
+      } else {
+        await vendorWavekitExamples()
+      }
+      if (!FORCE_VENDOR && existsSync(join(root, 'public/surfer/surfer_bg.wasm'))) {
+        this.warn('public/surfer already exists, skipping Surfer build (set FORCE_VENDOR=1 to refresh)')
+      } else {
+        buildSurfer()
+      }
     },
   }
 }

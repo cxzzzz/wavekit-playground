@@ -176,14 +176,13 @@ a:hover { color: var(--teal); }
 }
 .sidebar-toggle:hover { background: var(--surface-hover); border-color: var(--teal); color: var(--teal); }
 
-.workspace { background: var(--surface-sunken); display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.workspace { background: var(--surface); display: flex; flex: 1; flex-direction: column; min-width: 0; }
 .pane-bar, .analysis-bar {
   align-items: center;
   background: var(--surface);
+  border: 0;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
-  border-left: 0;
-  border-right: 0;
   cursor: pointer;
   display: flex;
   flex: 0 0 31px;
