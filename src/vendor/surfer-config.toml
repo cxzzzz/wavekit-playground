@@ -1,0 +1,11 @@
+theme = ""
+default_variable_name_type = "Unique"
+
+[layout]
+show_menu = false
+show_statusbar = false
+
+[layout.toolbar.visibility]
+menu = false
+files = false
+cxxrtl = false
