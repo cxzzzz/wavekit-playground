@@ -345,10 +345,7 @@ onBeforeUnmount(() => {
     <header class="top">
       <a class="brand" href="https://cxzzzz.github.io/wavekit/" target="_blank" rel="noreferrer">
         <img :src="logoSrc" alt="" />
-        <span class="brand-mark">
-          wavekit
-          <span class="version-badge">{{ WAVEKIT_VERSION }}</span>
-        </span>
+        <span class="brand-mark">wavekit<span class="version-badge">v{{ WAVEKIT_VERSION }}</span></span>
       </a>
       <span class="top-divider" />
       <span class="top-section">Playground</span>
@@ -424,9 +421,9 @@ onBeforeUnmount(() => {
 
       <main ref="workspaceRef" class="workspace">
         <button class="pane-bar" type="button" :aria-expanded="!surferCollapsed" @click="toggleSurfer">
-          <span><span class="pane-dot teal" /> WAVEFORM VIEW</span>
+          <span><span class="pane-dot teal" />Waveform</span>
           <span v-if="selected" class="pane-meta">{{ selected.name }}</span>
-          <span class="chevron vertical" :class="{ reverse: surferCollapsed }" aria-hidden="true" />
+          <span class="chevron vertical" :class="{ collapsed: surferCollapsed }" aria-hidden="true" />
         </button>
         <div class="surfer-wrap" :style="surferStyle" :class="{ hidden: surferCollapsed }">
           <iframe
@@ -442,13 +439,13 @@ onBeforeUnmount(() => {
         </div>
         <div v-show="!surferCollapsed && !pythonCollapsed" class="split" role="separator" aria-orientation="horizontal" @pointerdown="startSplit" />
         <button class="analysis-bar" type="button" :aria-expanded="!pythonCollapsed" @click="togglePython">
-          <span><span class="pane-dot violet" /> ANALYSIS</span>
-          <span class="chevron vertical reverse" :class="{ flip: pythonCollapsed }" aria-hidden="true" />
+          <span><span class="pane-dot violet" />Analysis</span>
+          <span class="chevron vertical" :class="{ collapsed: pythonCollapsed }" aria-hidden="true" />
         </button>
         <section class="python-pane" :class="{ hidden: pythonCollapsed }">
           <div class="code-panel" :style="{ flex: `0 0 ${codeRatio * 100}%` }">
             <div class="panel-toolbar">
-              <span class="panel-label">CODE</span>
+              <span class="panel-label">Code</span>
               <div class="editor-actions">
                 <button type="button" class="clear-button" title="Restore the initial code" @click="resetCode">Reset</button>
                 <button type="button" class="clear-button" title="Clear the editor" @click="clearCode">Clear</button>
@@ -459,7 +456,7 @@ onBeforeUnmount(() => {
           </div>
           <div class="code-split" role="separator" aria-orientation="vertical" @pointerdown="startCodeSplit" />
           <div class="result-panel">
-            <div class="panel-toolbar"><span class="panel-label">RESULT</span><button type="button" class="clear-button" @click="clearOutput">Clear</button></div>
+            <div class="panel-toolbar"><span class="panel-label">Result</span><button type="button" class="clear-button" @click="clearOutput">Clear</button></div>
             <pre v-if="output" class="result-output">{{ output }}</pre>
             <p v-else class="result-empty">Run Python to see output.</p>
           </div>

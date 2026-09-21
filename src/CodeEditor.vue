@@ -51,11 +51,11 @@ onBeforeUnmount(() => view?.destroy())
 
 <style>
 .editor, .editor .cm-editor { height: 100%; }
-.editor .cm-editor { background: #10171c; color: #dce8ea; font: 12px/1.65 var(--mono); outline: 0; }
+.editor .cm-editor { background: var(--canvas); color: #dce8ea; font: 12px/1.65 var(--mono); outline: 0; }
 .editor .cm-scroller { overflow: auto; padding: 13px 0; }
 .editor .cm-content { caret-color: #62c8bf; padding: 0 14px; }
 .editor .cm-cursor { border-left-color: #62c8bf; }
 .editor .cm-selectionBackground { background: #214b48 !important; }
-.editor .cm-gutters { background: #10171c; border-right: 1px solid #223238; color: #52676d; }
-.editor .cm-activeLineGutter { background: #152329; color: #8fa5aa; }
+.editor .cm-gutters { background: var(--canvas); border-right: 1px solid var(--line); color: #52676d; }
+.editor .cm-activeLineGutter { background: var(--surface-hover); color: #8fa5aa; }
 </style>
