@@ -226,7 +226,10 @@ function runCode() {
   worker.postMessage({
     type: 'run',
     code: code.value,
-    files: files.value.map(file => ({ path: file.pythonPath, bytes: file.data.slice(0) })),
+    files: visibleFiles.value.map(file => ({
+      path: file.pythonPath.split('/').pop(),
+      bytes: file.data.slice(0),
+    })),
   })
 }
 

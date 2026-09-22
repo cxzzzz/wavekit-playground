@@ -25,13 +25,21 @@ async function run(code: string, files: FileInput[]) {
   const output: string[] = []
   pyodide.setStdout({ batched: (text: string) => output.push(`${text}\n`) })
   pyodide.setStderr({ batched: (text: string) => output.push(`[stderr] ${text}\n`) })
+  await pyodide.runPythonAsync(`
+import os
+import shutil
+
+workspace = '/home/pyodide/workspace'
+shutil.rmtree(workspace, ignore_errors=True)
+os.makedirs(workspace)
+os.chdir(workspace)
+`)
   for (const file of files) {
-    const path = `/home/pyodide/${file.path}`
+    const path = `/home/pyodide/workspace/${file.path}`
     const parent = path.slice(0, path.lastIndexOf('/'))
     pyodide.FS.mkdirTree(parent)
     pyodide.FS.writeFile(path, new Uint8Array(file.bytes))
   }
-  await pyodide.runPythonAsync("import os\nos.chdir('/home/pyodide')")
   await pyodide.runPythonAsync(code)
   self.postMessage({ type: 'result', output: output.join('') })
 }
