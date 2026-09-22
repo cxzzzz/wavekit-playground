@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import logoSrc from './assets/logo.svg'
 import CodeEditor from './CodeEditor.vue'
 import { loadExamples, type Example } from './examples'
@@ -56,6 +56,10 @@ const visibleFiles = computed(() => files.value.filter(file => (mode.value === '
 const selected = computed(() => files.value.find(file => file.id === selectedId.value) ?? null)
 const surferStyle = computed(() => ({ flex: pythonCollapsed.value ? '1 1 auto' : `0 0 ${surferRatio.value * 100}%` }))
 const surferEmpty = computed(() => selectedId.value === null)
+
+watch([mode, exampleId], () => {
+  output.value = ''
+})
 
 function loadSurfer(blobUrl: string, attempt = 0) {
   lastBlobUrl = blobUrl
