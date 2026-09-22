@@ -30,7 +30,9 @@ import os
 import shutil
 
 workspace = '/home/pyodide/workspace'
-shutil.rmtree(workspace, ignore_errors=True)
+os.chdir('/home/pyodide')
+if os.path.exists(workspace):
+    shutil.rmtree(workspace)
 os.makedirs(workspace)
 os.chdir(workspace)
 `)
