@@ -63,10 +63,10 @@ function buildExamples(exampleRoot: string, destRoot: string) {
 }
 
 async function vendorWavekitExamples() {
-  const tag = await fetchLatestWavekitTag()
+  const ref = process.env.WAVEKIT_REF || await fetchLatestWavekitTag()
   const tmp = mkdtempSync(join(tmpdir(), 'wavekit-examples-'))
   try {
-    await downloadAndExtract(`https://github.com/${WAVEKIT_REPO}/archive/refs/tags/${tag}.tar.gz`, tmp, 1)
+    await downloadAndExtract(`https://github.com/${WAVEKIT_REPO}/archive/${encodeURIComponent(ref)}.tar.gz`, tmp, 1)
     buildExamples(join(tmp, 'example'), join(root, 'public/examples'))
   } finally {
     rmSync(tmp, { recursive: true, force: true })

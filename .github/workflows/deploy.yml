@@ -2,6 +2,11 @@ name: Deploy Playground
 
 on:
   workflow_dispatch:
+    inputs:
+      wavekit_ref:
+        description: Wavekit tag, branch, or commit used to build examples
+        required: false
+        default: ''
   push:
     branches: [main]
 
@@ -33,6 +38,8 @@ jobs:
 
       - run: npm ci
       - run: npm run build
+        env:
+          WAVEKIT_REF: ${{ inputs.wavekit_ref }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
